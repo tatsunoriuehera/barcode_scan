@@ -13,8 +13,7 @@
     <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
     <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
 
-
-<script>
+    <script>
     function scanBarcode() {
       window.plugins.barcodeScanner.scan( function(result) {
         document.getElementById('copyTarget').value=result.text;
@@ -29,8 +28,6 @@
     </script>
 </head>
 <body>
-    <p style="text-align:right"><img src="logoclear.gif" width="161" height="54"></p>
-    <hr>
     <ons-button modifier="large--cta" onClick ="scanBarcode()">scan_barcode</ons-button>
     <hr>
     <ons-input modifier="underbar" placeholder="result" [(value)]="target" input-id="copyTarget"></ons-input>

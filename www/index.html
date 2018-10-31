@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <script src="components/loader.js"></script>
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="onsen/onsenui.css">
+    <link rel="stylesheet" href="onsen/onsen-css-components.min.css">
+    <script src="onsen/onsenui.min.js"></script>
+    <!--<link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>-->
+
+
+<script>
+    function shoot(){
+        var option = {
+            saveToPhotoAlbum: true //撮影後端末に保存
+        };
+        //カメラを起動
+        //Cordovaのcamera APIを使用してカメラを起動している処理
+        navigator.camera.getPicture(onSuccess, onError, option);
+        //成功時に呼び出されるコールバック関数
+        function onSuccess(imageURI){
+            document.querySelector("#photo").src = imageURI;
+        }
+        //失敗時に呼び出されるコールバック関数
+        function onError(message){
+            alert("Error:" + message);
+        }
+    }
+
+    function scanBarcode() {
+      window.plugins.barcodeScanner.scan( function(result) {
+        //var text = "Clipboard Plugin";document.addEventListener('deviceready', function()
+        //{
+        //cordova.plugins.clipboard.copy(text);
+        //});
+        //cordova.InAppBrowser.open() 関数は、window.open() 関数を代替する関数です
+        //InAppBrowser が使用できるのは、deviceready イベントの発火後
+        //https://docs.monaca.io/ja/reference/cordova_6.2/inappbrowser/
+        //var ref = cordova.InAppBrowser.open('http://61.115.113.199/pg/price_serch.php?result.text');
+        //alert("読み込み成功しました\n" +
+        //          "結果Result: " + result.text + "\n" +
+        //          "形式Format: " + result.format + "\n" +
+        //          "Cancelled: " + result.cancelled);
+        //document.write(result.text);
+        //console.log(result.text);
+        //document.getElementById("ResultMessage").value="result.text";
+
+        //スキャン結果を画面へ表示させる
+        document.getElementById('copyTarget').value=result.text;
+
+        var ref = cordova.InAppBrowser.open('http://61.115.113.199/pg/price_serch.php?result='+copyTarget.value,'_self','location=no');
+        //var copyTarget = document.getElementById("copyTarget");
+        //copyTarget.select();
+        //document.execCommand("Copy");
+        //alert("コピーできました！ : " + copyTarget.value);
+        //var ref = cordova.InAppBrowser.open('http://61.115.113.199/pg/price_serch.php','_system','location=no');
+                
+        //var ref = cordova.InAppBrowser.open('http://');          
+        //var ref = cordova.InAppBrowser.open('https://www.google.co.jp');
+        //ref.addEventListener('loadstop', function() {
+        //ref.executeScript({code: "body { background: #ffff00"});
+        //});
+                               
+        }, function(error) {
+             alert("スキャンに失敗しましたScanning failed: " + error);
+           }
+        );
+    }
+
+      function jump(){
+      //if (confirm("仕入れ一覧画面へ移動しますか？")==true)
+      //OKならdbページにジャンプさせる
+      window.open('https://www.google.co.jp/', '_blank');
+      //location.href = "https://google.co.jp";
+      }
+
+      function url(){
+      //document.addEventListener("deviceready", onDeviceReady, false);
+      var ref = cordova.InAppBrowser.open('http://61.115.113.199/pg/price_serch2.php','_self','location=no');
+      //ref.addEventListener('loadstop', function() {
+      //ref.executeScript({code:"result.text"});
+      //});
+      //window.open('https://www.google.co.jp/', '_blank');
+      }
+
+      function post_resultext(){ 
+      var ref = cordova.InAppBrowser.open('http://');}
+
+      function copyToClipboard() {
+      // コピー対象をJavaScript上で変数として定義する
+      var copyTarget = document.getElementById("copyTarget").value;
+      // コピー対象のテキストを選択する
+      //copyTarget.select();
+      // 選択しているテキストをクリップボードにコピーする
+      document.execCommand("Copy");
+      // コピーをお知らせする
+      alert("コピーできました！ : " + copyTarget);
+      }
+
+    </script>
+</head>
+<body>
+    <p style="text-align:right"><img src="logoclear.gif" width="161" height="54"></p>
+    <hr>
+    <ons-button modifier="large--cta" onClick ="scanBarcode()">タップして販売ラベルをスキャン</ons-button>
+    <hr>
+    <ons-input modifier="underbar" placeholder="スキャン結果表示" [(value)]="target" input-id="copyTarget"></ons-input>
+    <!--<ons-button onclick="copyToClipboard()">Copy text</ons-button>-->
+    <!--<input id="copyTarget" type="text" value="スキャン結果表示" readonly-->
+    <hr>
+    <ons-button modifier="large" onClick="url()">ＤＢへ移動</ons-button>
+    <hr>
+    <img id="photo" height="400">
+    <hr>
+    <button id="shoot-button" onclick="shoot()">写真を撮る</button>    
+    <!--<input type="button" onClick ="scanBarcode()" value ="バーコードスキャン" />-->
+    <!--<p id="ResultMessage">ここに結果が表示されます。</p>-->
+    <!--<input type="button" onClick="jump()" value="リンク２"/>-->
+    <!--<ons-button onClick="jump()">googleへ移動</ons-button>//>
+    <!--<input type="button" onClick="url()" value="googleへ移動"/>-->
+    <!--<input type="button" onClick="post_resultext()" value="リンク１"/>-->
+    <!--<p id="result_text">result_text</p>-->
+    <!-- コピー対象要素とコピーボタン -->
+    <!--<input id="copyTarget" type="text" value="スキャン結果表示" readonly>-->
+    <!--<input id="copyTarget" type="text" value="result.text" readonly>-->
+    <!--<button onclick="copyToClipboard()">Copy text</button>-->
+    <!--<input type="button" name="test_aaa" id="test_aaa" value="スキャンするとvalueが変化"/>-->
+    <!--<ons-button onclick="alert('Hello World!')">Click Me</ons-button>-->
+</body>
+</html>
